@@ -31,6 +31,14 @@
 
 如果用户未提供完整数据，应明确说明缺失项，并先用可用数据做定性回测。
 
+**自动化工具**：可使用 `scripts/backtest.py` 根据赛果 JSON 自动生成回测报告框架：
+
+```bash
+python scripts/backtest.py --results scripts/backtest-example.json --output backtest-report.md
+```
+
+然后人工补充规则触发情况和关键案例分析。
+
 ---
 
 ## 三、标准化输出结构

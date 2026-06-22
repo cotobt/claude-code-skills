@@ -1,0 +1,26 @@
+{
+  "matches": [
+    {
+      "date": "2026-06-12",
+      "home": "墨西哥",
+      "away": "南非",
+      "score": "2-0",
+      "home_odds": 1.35,
+      "draw_odds": 4.50,
+      "away_odds": 9.00,
+      "rules": "🏠东道主",
+      "notes": "揭幕战，东道主正路取胜"
+    },
+    {
+      "date": "2026-06-12",
+      "home": "韩国",
+      "away": "捷克",
+      "score": "2-1",
+      "home_odds": 2.80,
+      "draw_odds": 3.20,
+      "away_odds": 2.60,
+      "rules": "无显著触发",
+      "notes": "排名接近，正路"
+    }
+  ]
+}
