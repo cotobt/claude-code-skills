@@ -167,6 +167,18 @@ URL：`https://trade.500.com/jczq/index.php?playid=272&g=2`
   - 赔率/市场：OddsPortal、Pinnacle、bet365
   - 球员/阵容：Transfermarkt
   - 企业级：Opta（需商业授权）
+- **自动化脚本**：为提升效率，可使用 `scripts/` 目录下的数据获取脚本（需要安装 `requests` 和 `beautifulsoup4`）：
+  ```bash
+  # 统一入口
+  python scripts/fetch-match-data.py --source sofascore --home "Spain" --away "Saudi Arabia"
+  python scripts/fetch-match-data.py --source fbref --url <具体比赛URL>
+  python scripts/fetch-match-data.py --source oddsportal --url <具体比赛URL>
+
+  # 直接调用
+  python scripts/fetch-sofascore.py --home "Spain" --away "Saudi Arabia"
+  python scripts/fetch-fbref.py --url <具体比赛URL>
+  python scripts/fetch-oddsportal.py --url <具体比赛URL>
+  ```
 - 使用 `web_extract` 已知 URL 或 `web_search` 定位具体场次数据。
 - 采集到的数据必须标注来源名称和获取时间。
 - 不同来源数据不一致时，取算术平均或注明主要参考来源。
