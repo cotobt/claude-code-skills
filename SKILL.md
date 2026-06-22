@@ -2,12 +2,13 @@
 name: world-cup-predictor
 description: 世界杯竞彩预测+投注方案生成器。核心哲学是找到市场低估的冷门价值，而非重复市场共识。基于15维度评分系统（-2~+2）做定性分析，配合🚌冷门检测机制（传控vs大巴战术配对+传控质量分级+延续修正）、隐含概率提取、凯利公式分配注码。产出胜平负/让球盘预测及M串N容错串关方案。Use when user asks for world cup predictions, 竞彩方案, 冷门分析, betting strategy.
 metadata:
-  version: 3.11.0
+  version: 3.12.0
   voice: concise, data-driven, risk-first, cold-value-oriented
   author: Bryan Pan
   price: free
   tags: [world-cup, football, betting, prediction]
   changelog:
+    v3.12.0: 重写references/data-sources.md，按使用模式分类汇总数据源; 增加国内网站(DS足球/懂球帝)、国际专业网站(FBref/Understat/WhoScored/SofaScore/Transfermarkt/OddsPortal)和企业级数据源(Opta); 简化SKILL.md Step 1方法3，指向data-sources.md
     v3.11.0: Step 1新增数据模式判断(投注方案模式/预测分析模式/回测模式); 投注方案模式严格使用500.com单一数据源; 预测分析/回测模式允许多博彩机构赔率采集; 明确不同模式的数据获取规则和失败处理
     v3.10.0: 新增"独立执行模式"(用户说"预测分析"/"/分析"时不跑方案Step 10→12); 模型p映射表低赔场景补充; Step 1日期边界补充(500彩matchnum前缀解读规则)
     v3.9.0: Step 1新增数据获取失败硬性规则(获取不到就告知用户，禁止自找/自编赔率)
@@ -141,20 +142,20 @@ URL：`https://trade.500.com/jczq`
 **方法2（投注方案模式备选）：500彩票网 — 竞彩足球半全场页**
 URL：`https://trade.500.com/jczq/index.php?playid=272&g=2`
 
-**方法3（预测分析/回测模式使用）：多博彩机构赔率采集**
-- 当用户请求为"预测分析"或"回测"时，如果 500.com 数据缺失或不适用，允许从以下全球主要博彩机构采集赔率：
-  - bet365: https://www.bet365.com
-  - Pinnacle: https://www.pinnacle.com
-  - William Hill: https://www.williamhill.com
-  - Ladbrokes（立博）: https://www.ladbrokes.com
-  - Betfair: https://www.betfair.com
-  - SBOBET: https://www.sbobet.com
-  - 188BET: https://www.188bet.com
-- 使用 `web_extract` 已知 URL 或 `web_search` 定位具体场次赔率。
-- 采集到的多机构赔率必须标注来源名称和获取时间。
-- 不同机构赔率不一致时，取算术平均值作为市场隐含概率基准，并在输出中说明。
+**方法3（预测分析/回测模式使用）：多数据源采集**
+- 当用户请求为"预测分析"或"回测"时，如果 500.com 数据缺失或不适用，允许从多个数据源采集赔率和比赛数据。
+- 完整数据源列表、URL、使用场景和采集方式参见 `references/data-sources.md`。
+- 常用数据源包括：
+  - 即时比分/战报：DS足球、懂球帝、SofaScore、Flashscore
+  - 高阶数据：FBref、Understat、WhoScored
+  - 赔率/市场：OddsPortal、Pinnacle、bet365
+  - 球员/阵容：Transfermarkt
+  - 企业级：Opta（需商业授权）
+- 使用 `web_extract` 已知 URL 或 `web_search` 定位具体场次数据。
+- 采集到的数据必须标注来源名称和获取时间。
+- 不同来源数据不一致时，取算术平均或注明主要参考来源。
 - 禁止编造数据，禁止用"约"字替代精确数值。
-- 赔率汇总表仍必须用 `render_table()` 生成。
+- 数据汇总表仍必须用 `render_table()` 生成。
 
 **解析指南：** 参考 `references/500-parse-guide.md`。关键点：队名从 `title` 属性而非td纯文本提取；让球数从td[4]正则提取；排名信息在 `[N]` 格式中。
 
